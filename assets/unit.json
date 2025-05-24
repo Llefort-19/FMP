@@ -1,0 +1,98 @@
+{
+  "units": [
+    {
+      "id": "starfreighter",
+      "name": "Starfreighter",
+      "category": "mothership",
+      "category_type": "none",
+      "can_enter": ["plain", "swamp"],
+      "tide_sensitive": false,
+
+      "pod_shapes": [
+        {
+          "shape_id": "shape_N_SW_SE",
+          "pod_angles": [0, 2, 4] 
+        },
+        {
+          "shape_id": "shape_S_NW_NE",
+          "pod_angles": [1, 3, 5] 
+        }
+      ],
+
+      "turrets": { "count": 3, "range": 2 },
+      "cargo_slots": 999,
+      "indestructible": true
+    },
+
+    {
+      "id": "barge",
+      "name": "Barge",
+      "category": "transporter",
+      "category_type": "marine_vehicle",
+      "can_enter": ["sea", "reef"],
+      "tide_sensitive": true,
+      "footprint": [
+        [[0,0],[1,0]],
+        [[0,0],[1,1]],
+        [[0,0],[0,1]]
+      ],
+      "cargo_slots": 4
+    },
+
+    {
+      "id": "crab",
+      "name": "Crab",
+      "category": "transporter",
+      "category_type": "terrain_vehicle",
+      "can_enter": ["plain", "swamp"],
+      "tide_sensitive": true,
+      "footprint": [[0,0]],
+      "cargo_slots": 2
+    },
+
+    {
+      "id": "weather_hen",
+      "name": "Weather Hen",
+      "category": "transporter",
+      "category_type": "terrain_vehicle",
+      "can_enter": ["plain", "swamp"],
+      "tide_sensitive": true,
+      "footprint": [[0,0]],
+      "cargo_slots": 1
+    },
+
+    {
+      "id": "tank",
+      "name": "Tank",
+      "category": "destroyer",
+      "category_type": "terrain_vehicle",
+      "can_enter": ["plain", "swamp"],
+      "tide_sensitive": true,
+      "footprint": [[0,0]],
+      "range": 2,
+      "range_modifiers": [{ "terrain": "mountain", "range": 3 }]
+    },
+
+    {
+      "id": "heap",
+      "name": "T-99 \"Heap\" Heavy Tank",
+      "category": "destroyer",
+      "category_type": "terrain_vehicle",
+      "can_enter": ["plain", "swamp"],
+      "tide_sensitive": true,
+      "footprint": [[0,0]],
+      "range": 3
+    },
+
+    {
+      "id": "gunboat",
+      "name": "Gunboat",
+      "category": "destroyer",
+      "category_type": "marine_vehicle",
+      "can_enter": ["sea", "reef"],
+      "tide_sensitive": true,
+      "footprint": [[0,0]],
+      "range": 2
+    }
+  ]
+}

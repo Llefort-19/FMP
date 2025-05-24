@@ -1,0 +1,36 @@
+{
+  "tide_cards": [
+    { "id": "low_1",    "type": "low",    "name": "Low Tide"    },
+    { "id": "low_2",    "type": "low",    "name": "Low Tide"    },
+    { "id": "low_3",    "type": "low",    "name": "Low Tide"    },
+    { "id": "low_4",    "type": "low",    "name": "Low Tide"    },
+    { "id": "low_5",    "type": "low",    "name": "Low Tide"    },
+
+    { "id": "normal_1", "type": "normal", "name": "Normal Tide" },
+    { "id": "normal_2", "type": "normal", "name": "Normal Tide" },
+    { "id": "normal_3", "type": "normal", "name": "Normal Tide" },
+    { "id": "normal_4", "type": "normal", "name": "Normal Tide" },
+    { "id": "normal_5", "type": "normal", "name": "Normal Tide" },
+
+    { "id": "high_1",   "type": "high",   "name": "High Tide"   },
+    { "id": "high_2",   "type": "high",   "name": "High Tide"   },
+    { "id": "high_3",   "type": "high",   "name": "High Tide"   },
+    { "id": "high_4",   "type": "high",   "name": "High Tide"   },
+    { "id": "high_5",   "type": "high",   "name": "High Tide"   }
+  ],
+
+  "setup": {
+    "future_deck_size": 9,
+    "reserve_size": 6
+  },
+
+  "fixed_turns": {
+    "1": "normal",
+    "2": "normal"
+  },
+
+  "reshuffle": {
+    "turns": [11, 19],
+    "instruction": "Shuffle all 15 cards except the CURRENT one, stack 9 as new Future deck, set 6 aside."
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "turns": [
+    { "number":  1, "name": "Arrival",           "action_points":  0,
+      "special": "Land Starfreighters; no other actions." },
+
+    { "number":  2, "name": "Deployment",        "action_points":  0,
+      "special": "Unload starting units; no other actions." },
+
+    { "number":  3, "name": "Start Mission",     "action_points":  5 },
+
+    { "number":  4, "name": "Full Hassle",       "action_points": 10 },
+
+    { "number":  5, "name": "Regular Turn",      "action_points": 15 },
+    { "number":  6, "name": "Regular Turn",      "action_points": 15 },
+    { "number":  7, "name": "Regular Turn",      "action_points": 15 },
+    { "number":  8, "name": "Regular Turn",      "action_points": 15 },
+    { "number":  9, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 10, "name": "Regular Turn",      "action_points": 15 },
+    
+    { "number": 11, "name": "Regular Turn",     "action_points": 15,
+    "tide_reshuffle": true },
+    
+    { "number": 12, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 13, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 14, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 15, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 16, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 17, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 18, "name": "Regular Turn",      "action_points": 15 },
+
+    { "number": 19, "name": "Regular Turn",      "action_points": 15,
+      "tide_reshuffle": true },
+
+    { "number": 20, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 21, "name": "Early Departure",   "action_points": 15,
+      "special": "At start of turn *after tide*, each player declares whether they will leave the planet or stay until turn 25." },
+
+    { "number": 22, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 23, "name": "Regular Turn",      "action_points": 15 },
+    { "number": 24, "name": "Regular Turn",      "action_points": 15 },
+
+    { "number": 25, "name": "Last Call",         "action_points": 15,
+      "special": "Remaining players must launch.  AP cost = 1 + (# broken turrets)." }
+  ]
+}
