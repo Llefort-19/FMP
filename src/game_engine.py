@@ -201,28 +201,17 @@ class GameEngine:
         
         # Draw Zone Borders
         # For flat-topped hexes with RegularPolygon(orientation=math.radians(30)):
-        # V0 (30°), V1 (90°), V2 (150°), V3 (210°), V4 (270°), V5 (330°).
-        # AXIAL_DIRECTIONS = [(0,-1)N, (1,-1)NE, (1,0)SE, (0,1)S, (-1,1)SW, (-1,-1)NW]
-        # Edges facing these directions (indices of vertices forming the edge):
-        # N: V1-V2; NE: V0-V1; SE/E: V5-V0; S/SE: V4-V5; SW: V3-V4; NW: V2-V3
-        MATPLOTLIB_EDGE_VERTEX_INDICES = [ 
-            (1, 2), # 0: North
-            (0, 1), # 1: Northeast
-            (5, 0), # 2: Southeast (East)
-            (4, 5), # 3: South (Southeast)
-            (3, 4), # 4: Southwest
-            (2, 3)  # 5: Northwest
-        ]
+        # Vertices V0(30°), V1(90°), V2(150°), V3(210°), V4(270°), V5(330°).
+        # self.board.AXIAL_DIRECTIONS from board.py is:
+        # [(0,-1)N, (+1,-1)NE, (+1,0)SE/E, (0,+1)S, (-1,+1)SW, (-1,0)NW/W]
+        # The old MATPLOTLIB_EDGE_VERTEX_INDICES is no longer used.
         ZONE_BORDER_COLOR_HEX = _rgb_to_hex((0,0,0)) # Black
-        ZONE_BORDER_LINEWIDTH = 2.5 # Increased from 2.0
-        ZONE_BORDER_ZORDER = 2.0    # Increased from 1.5, above hex faces and their default thin border, below ore/units
+        ZONE_BORDER_LINEWIDTH = 2.5
+        ZONE_BORDER_ZORDER = 2.0
 
-        def get_matplotlib_hex_vertices(c_x, c_y, radius, orientation_rad):
-            verts = []
-            for i in range(6):
-                angle = orientation_rad + (2 * math.pi * i / 6)
-                verts.append((c_x + radius * math.cos(angle), c_y + radius * math.sin(angle)))
-            return verts
+        # The get_matplotlib_hex_vertices function is no longer needed for border drawing.
+        # Ensure it's not used elsewhere before removing its definition if it was a local helper.
+        # If it was defined globally or in another class, no action here.
 
         for hex_obj in all_hex_objects:
             if hex_obj.zone_id is None: # Only draw borders for hexes that are part of a zone
@@ -231,12 +220,13 @@ class GameEngine:
             current_hex_q_axial, current_hex_r_axial = self.board._oddq_to_axial(hex_obj.col, hex_obj.row)
             hex_plot_center_x, hex_plot_center_y = hex_obj.center_x, -hex_obj.center_y # Remember y-inversion
             
-            hex_vertices_plot_coords = get_matplotlib_hex_vertices(hex_plot_center_x, hex_plot_center_y, HEX_RADIUS, HEX_ORIENTATION)
+            # The old hex_vertices_plot_coords is no longer needed here.
 
-            # Only check specific directions to avoid drawing each border twice
-            # For example, check N, NE, SE (East) from the current hex.
-            # AXIAL_DIRECTIONS indices: 0 (N), 1 (NE), 2 (SE/E)
-            for dir_idx in range(3): # Only consider directions 0, 1, 2
+            # Only check specific directions to avoid drawing each border twice.
+            # board.AXIAL_DIRECTIONS[0] is (0,-1) -> N
+            # board.AXIAL_DIRECTIONS[1] is (+1,-1) -> NE
+            # board.AXIAL_DIRECTIONS[2] is (+1,0) -> SE/E
+            for dir_idx in range(3): # Only consider directions N, NE, SE/E from current hex
                 dq, dr = self.board.AXIAL_DIRECTIONS[dir_idx]
                 neighbor_q_axial = current_hex_q_axial + dq
                 neighbor_r_axial = current_hex_r_axial + dr
@@ -254,14 +244,42 @@ class GameEngine:
                     is_boundary_edge = True
                 
                 if is_boundary_edge:
-                    v_idx1, v_idx2 = MATPLOTLIB_EDGE_VERTEX_INDICES[dir_idx]
-                    point1 = hex_vertices_plot_coords[v_idx1]
-                    point2 = hex_vertices_plot_coords[v_idx2]
+                    # Get centers of both hexes (current hex's plot centers are already inverted for y)
+                    center1_x, center1_y = hex_plot_center_x, hex_plot_center_y
+                    center2_x, center2_y = neighbor_hex.center_x, -neighbor_hex.center_y # Invert neighbor's y for Matplotlib
+
+                    # Compute midpoint of the line connecting the two hex centers
+                    mid_x = (center1_x + center2_x) / 2
+                    mid_y = (center1_y + center2_y) / 2
+
+                    # Compute vector from center1 to center2
+                    dx = center2_x - center1_x
+                    dy = center2_y - center1_y
                     
-                    ax.add_line(Line2D([point1[0], point2[0]], [point1[1], point2[1]], 
-                                       color=ZONE_BORDER_COLOR_HEX, 
-                                       linewidth=ZONE_BORDER_LINEWIDTH, 
-                                       zorder=ZONE_BORDER_ZORDER))
+                    edge_len = math.hypot(dx, dy)
+                    if edge_len == 0: # Should not happen for distinct hexes
+                        continue 
+
+                    # Normalize and rotate 90° to get perpendicular vector for the border mark
+                    # This vector points along the border line itself
+                    perp_dx = -dy / edge_len
+                    perp_dy = dx / edge_len
+
+                    # Define the length of the border mark (e.g., 80% of hex radius)
+                    mark_half_len = HEX_RADIUS * 0.4 # User suggested 0.4, total length 0.8 * HEX_RADIUS
+
+                    # Calculate endpoints of the border mark
+                    x0 = mid_x - perp_dx * mark_half_len
+                    y0 = mid_y - perp_dy * mark_half_len
+                    x1 = mid_x + perp_dx * mark_half_len
+                    y1 = mid_y + perp_dy * mark_half_len
+                    
+                    border_line = Line2D([x0, x1], [y0, y1],
+                                       color=ZONE_BORDER_COLOR_HEX,
+                                       linewidth=ZONE_BORDER_LINEWIDTH,
+                                       zorder=ZONE_BORDER_ZORDER)
+                    # border_line.set_linestyle('solid') # Ensure solid lines if needed, but default should be solid
+                    ax.add_line(border_line)
 
         # Draw Freighters
         for player_id_str, landing_info in self.freighter_landings.items():
