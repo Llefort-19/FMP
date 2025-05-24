@@ -93,6 +93,16 @@
       "tide_sensitive": true,
       "footprint": [[0,0]],
       "range": 2
+    },
+    {
+      "id": "pontoon",
+      "name": "Pontoon",
+      "category": "terrain modifier",
+      "category_type": "static",
+      "can_enter": ["sea", "reef", "plain", "swamp"],
+      "tide_sensitive": false,
+      "footprint": [[0,0]]
     }
+  
   ]
 }

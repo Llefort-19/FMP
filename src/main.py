@@ -1,5 +1,7 @@
 import os
-from game_engine import GameEngine
+import pygame
+from .game_engine import GameEngine
+from .config import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, GAME_TITLE
 
 if __name__ == "__main__":
     print("Starting Full Metal Planet...")

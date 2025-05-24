@@ -99,6 +99,7 @@ class Unit:
     second_hex_row: Optional[int] = None # For multi-hex units like barge
     cargo: List['Unit'] = field(default_factory=list) # For units carried by this unit
     is_in_freighter: bool = False # True if the unit is in the freighter, False if deployed on board
+    is_neutralised: bool = False # Added for tide effects as per test_phase1.py
     # Potentially add health, status effects, etc. later
 
     def __repr__(self):

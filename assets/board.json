@@ -2252,7 +2252,7 @@
       "row": 8,
       "terrain": "mountain",
       "ore": false,
-      "zone_id": 13
+      "zone_id": 5
     },
     {
       "col": 26,
@@ -4457,7 +4457,7 @@
       "row": 17,
       "terrain": "reef",
       "ore": false,
-      "zone_id": 10
+      "zone_id": 11
     },
     {
       "col": 8,

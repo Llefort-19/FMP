@@ -1,5 +1,10 @@
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, TYPE_CHECKING
+
+# Forward declarations for type hinting
+if TYPE_CHECKING:
+    from .game_state import GameState
+    from .commands import GameCommand
 
 MAX_BANKED_AP = 10 # Max AP that can be in the bank (saved)
 REGULAR_TURN_BASE_AP = 15
@@ -79,4 +84,19 @@ class Player:
         
         print(f"Player {self.id} ended turn. Total AP available for spending: {self._total_ap_for_spending_this_turn}. "
               f"AP Spent: {self.action_points_spent_this_turn}. Unspent from pool: {unspent_ap_from_total_pool}. "
-              f"Newly Banked this round: {newly_banked_this_round}. Final Banked AP: {self.action_points_banked}.") 
+              f"Newly Banked this round: {newly_banked_this_round}. Final Banked AP: {self.action_points_banked}.")
+
+    # Methods for Task 7 (GameEngine._handle_player_actions)
+    def can_still_act(self) -> bool:
+        """Checks if the player can still perform actions (e.g., has AP or units to command)."""
+        # For now, let's assume player can act if they have some AP left in their current spending pool.
+        # More sophisticated logic could check for available commands, unit states, etc.
+        available_ap_now = self._total_ap_for_spending_this_turn - self.action_points_spent_this_turn
+        return available_ap_now > 0
+
+    def next_command(self, state: 'GameState') -> Optional['GameCommand']:
+        """Determines the next command the player wants to issue. Stub for now."""
+        # This would involve player input or AI logic.
+        # For Phase 1, returning None is sufficient as per spec.
+        print(f"Player {self.id}: next_command() called, returning None (stub).")
+        return None 
